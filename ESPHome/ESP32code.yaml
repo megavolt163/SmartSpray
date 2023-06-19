@@ -407,7 +407,7 @@ script:
       - lambda: |-
           id(var_zone_remainings)[0] = id(zone1_duration).state;
           id(zone1_remaining).update();
-      - if:
+      - while:
           condition:
             lambda: "return id(var_zone_remainings)[0] > 0;"
           then:
@@ -415,22 +415,24 @@ script:
             - lambda: |-
                 id(var_zone_remainings)[0] -= 1;
                 id(zone1_remaining).update();
-          else:
-            - lambda: |-
-                id(var_zone_remainings)[0] -= 1;
-                id(zone1_remaining).update();
-                if (id(zone2_enabled).state == 1)
-                  id(irrigation_zone2).turn_on();
-                if (id(zone3_enabled).state == 1 && id(zone2_enabled).state == 0)
-                  id(irrigation_zone3).turn_on();
-                if (id(zone4_enabled).state == 1 && id(zone3_enabled).state == 0 && id(zone2_enabled).state == 0)
-                  id(irrigation_zone4).turn_on();
+
+  - id: zone2_start
+    then:
+      - lambda: |-
+          if (id(zone2_enabled).state == 1)
+            id(irrigation_zone2).turn_on();
+          if (id(zone3_enabled).state == 1 && id(zone2_enabled).state == 0)
+            id(irrigation_zone3).turn_on();
+          if (id(zone4_enabled).state == 1 && id(zone3_enabled).state == 0 && id(zone2_enabled).state == 0)
+            id(irrigation_zone4).turn_on();
+
+                  
   - id: zone2_wait
     then:
       - lambda: |-
           id(var_zone_remainings)[1] = id(zone2_duration).state;
           id(zone2_remaining).update();
-      - if:
+      - while:
           condition:
             lambda: "return id(var_zone_remainings)[1] > 0;"
           then:
@@ -438,21 +440,21 @@ script:
             - lambda: |-
                 id(var_zone_remainings)[1] -= 1;
                 id(zone2_remaining).update();
-          else:      
-            - lambda: |-
-                id(var_zone_remainings)[1] -= 1;
-                id(zone2_remaining).update();
-                if (id(zone3_enabled).state == 1)
-                  id(irrigation_zone3).turn_on();
-                if (id(zone4_enabled).state == 1 && id(zone3_enabled).state == 0)
-                  id(irrigation_zone4).turn_on();
-                
+                  
+  - id: zone3_start
+    then:
+      - lambda: |-
+          if (id(zone3_enabled).state == 1)
+            id(irrigation_zone3).turn_on();
+          if (id(zone4_enabled).state == 1 && id(zone3_enabled).state == 0)
+            id(irrigation_zone4).turn_on();         
+                  
   - id: zone3_wait
     then:
       - lambda: |-
           id(var_zone_remainings)[2] = id(zone3_duration).state;
           id(zone3_remaining).update();
-      - if:
+      - while:
           condition:
             lambda: "return id(var_zone_remainings)[2] > 0;"
           then:
@@ -460,12 +462,16 @@ script:
             - lambda: |-
                 id(var_zone_remainings)[2] -= 1;
                 id(zone3_remaining).update();
-          else:       
-            - lambda: |-
-                id(var_zone_remainings)[2] -= 1;
-                id(zone3_remaining).update();
                 if (id(zone4_enabled).state == 1)
                   id(irrigation_zone4).turn_on();
+                  
+  - id: zone4_start
+    then:
+      - lambda: |-
+          if (id(zone4_enabled).state == 1)
+            id(irrigation_zone4).turn_on();
+
+                  
   - id: zone4_wait
     then:
       - lambda: |-
