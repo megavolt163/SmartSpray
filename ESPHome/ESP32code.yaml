@@ -407,11 +407,15 @@ script:
       - lambda: |-
           id(var_zone_remainings)[0] = id(zone1_duration).state;
           id(zone1_remaining).update();
-      - while:
+      - if:
           condition:
             lambda: "return id(var_zone_remainings)[0] > 0;"
           then:
             - delay: 1min
+            - lambda: |-
+                id(var_zone_remainings)[0] -= 1;
+                id(zone1_remaining).update();
+          else:
             - lambda: |-
                 id(var_zone_remainings)[0] -= 1;
                 id(zone1_remaining).update();
@@ -426,11 +430,15 @@ script:
       - lambda: |-
           id(var_zone_remainings)[1] = id(zone2_duration).state;
           id(zone2_remaining).update();
-      - while:
+      - if:
           condition:
             lambda: "return id(var_zone_remainings)[1] > 0;"
           then:
             - delay: 1min
+            - lambda: |-
+                id(var_zone_remainings)[1] -= 1;
+                id(zone2_remaining).update();
+          else:      
             - lambda: |-
                 id(var_zone_remainings)[1] -= 1;
                 id(zone2_remaining).update();
@@ -444,11 +452,15 @@ script:
       - lambda: |-
           id(var_zone_remainings)[2] = id(zone3_duration).state;
           id(zone3_remaining).update();
-      - while:
+      - if:
           condition:
             lambda: "return id(var_zone_remainings)[2] > 0;"
           then:
             - delay: 1min
+            - lambda: |-
+                id(var_zone_remainings)[2] -= 1;
+                id(zone3_remaining).update();
+          else:       
             - lambda: |-
                 id(var_zone_remainings)[2] -= 1;
                 id(zone3_remaining).update();
