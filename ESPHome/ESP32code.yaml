@@ -207,6 +207,8 @@ switch:
       - switch.turn_on: irrigation_channel1
       - script.execute: zone1_wait
       - script.wait: zone1_wait
+      - script.execute: zone2_start
+      - script.wait: zone2_start      
       - switch.turn_off: irrigation_channel1
     turn_off_action:
       - script.stop: zone1_wait
@@ -223,6 +225,8 @@ switch:
       - switch.turn_on: irrigation_channel2
       - script.execute: zone2_wait
       - script.wait: zone2_wait
+      - script.execute: zone3_start
+      - script.wait: zone3_start  
       - switch.turn_off: irrigation_channel2
     turn_off_action:
       - script.stop: zone2_wait
@@ -239,6 +243,8 @@ switch:
       - switch.turn_on: irrigation_channel3
       - script.execute: zone3_wait
       - script.wait: zone3_wait
+      - script.execute: zone4_start
+      - script.wait: zone4_start        
       - switch.turn_off: irrigation_channel3
     turn_off_action:
       - script.stop: zone3_wait
