@@ -36,6 +36,8 @@ views:
           - type: entities
             entities:
               {% for zone in range(1, zones|int + 1) %}
+              - entity: text_sensor.zone_name_{{ zone - 1 }}
+                name: "Zone {{ zone }} Name"
               - entity: switch.zone_{{ zone }}_enabled
                 style: |
                   :host {
@@ -45,7 +47,9 @@ views:
                     {% endif %};
                   }
                 type: custom:multiple-entity-row
-                name: Enable zone {{ zone }} automation
+                name: >
+                  {% set zone_name = states('text_sensor.zone_name_{{ zone - 1 }}') %}
+                  {{ zone_name if zone_name != 'unknown' else 'Zone ' ~ zone }}
                 toggle: true
                 state_color: true
                 entities:
