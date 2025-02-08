@@ -66,6 +66,16 @@ number:
   for: i in range(zones|int)
 
 # Общие настройки для сенсоров
+
+text_sensor:
+  - platform: template
+    id: zone_name_{{ i }}
+    name: "Zone {{ i+1 }} Name"
+    initial_value: "Zone {{ i+1 }}"  # Значение по умолчанию
+    optimistic: true
+    restore_value: true
+  for: i in range(zones|int)
+
 sensor:
   - platform: template
     id: zone_remaining_{{ i }}
