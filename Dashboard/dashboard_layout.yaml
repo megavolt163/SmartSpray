@@ -25,108 +25,31 @@ views:
             state_color: false
           - type: horizontal-stack
             cards:
-              - show_name: true
+              {% for day in ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] %}
+              - type: button
+                show_name: true
                 show_icon: true
-                type: button
                 tap_action:
                   action: toggle
-                entity: switch.mon
-              - show_name: true
-                show_icon: true
-                type: button
-                tap_action:
-                  action: toggle
-                entity: switch.tue
-              - show_name: true
-                show_icon: true
-                type: button
-                tap_action:
-                  action: toggle
-                entity: switch.wed
-              - show_name: true
-                show_icon: true
-                type: button
-                tap_action:
-                  action: toggle
-                entity: switch.thu
-              - show_name: true
-                show_icon: true
-                type: button
-                tap_action:
-                  action: toggle
-                entity: switch.fri
-              - show_name: true
-                show_icon: true
-                type: button
-                tap_action:
-                  action: toggle
-                entity: switch.sat
-              - show_name: true
-                show_icon: true
-                type: button
-                tap_action:
-                  action: toggle
-                entity: switch.sun
+                entity: switch.{{ day }}
+              {% endfor %}
           - type: entities
             entities:
-              - entity: switch.zone_1_enabled
+              {% for zone in range(1, zones|int + 1) %}
+              - entity: switch.zone_{{ zone }}_enabled
                 style: |
                   :host {
-                    {% if states('switch.irrigation_zone_1') == 'on' %}
+                    {% if states('switch.irrigation_zone_{{ zone }}') == 'on' %}
                       --rgb-state-switch-color: #00FF00;
                       --paper-item-icon-color: #00FF00
                     {% endif %};
                   }
                 type: custom:multiple-entity-row
-                name: Enable zone 1 automation
+                name: Enable zone {{ zone }} automation
                 toggle: true
                 state_color: true
                 entities:
-                  - entity: number.zone_1_duration
+                  - entity: number.zone_{{ zone }}_duration
                     name: duration
-              - entity: switch.zone_2_enabled
-                style: |
-                  :host {
-                    {% if states('switch.irrigation_zone_2') == 'on' %}
-                      --rgb-state-switch-color: #00FF00;
-                      --paper-item-icon-color: #00FF00
-                    {% endif %};
-                  }
-                type: custom:multiple-entity-row
-                name: Enable zone 2 automation
-                toggle: true
-                state_color: true
-                entities:
-                  - entity: number.zone_2_duration
-                    name: duration
-              - entity: switch.zone_3_enabled
-                style: |
-                  :host {
-                    {% if states('switch.irrigation_zone_3') == 'on' %}
-                      --rgb-state-switch-color: #00FF00;
-                      --paper-item-icon-color: #00FF00
-                    {% endif %};
-                  }
-                type: custom:multiple-entity-row
-                name: Enable zone 3 automation
-                toggle: true
-                state_color: true
-                entities:
-                  - entity: number.zone_3_duration
-                    name: duration
-              - entity: switch.zone_4_enabled
-                style: |
-                  :host {
-                    {% if states('switch.irrigation_zone_4') == 'on' %}
-                      --rgb-state-switch-color: #00FF00;
-                      --paper-item-icon-color: #00FF00
-                    {% endif %};
-                  }
-                type: custom:multiple-entity-row
-                name: Enable zone 4 automation
-                toggle: true
-                state_color: true
-                entities:
-                  - entity: number.zone_4_duration
-                    name: duration
+              {% endfor %}
             state_color: false
