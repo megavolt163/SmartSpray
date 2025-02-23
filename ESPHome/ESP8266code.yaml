@@ -11,21 +11,11 @@ esphome:
 esp8266:
   board: d1_mini  # Для NodeMCU используйте nodemcuv2
 
-# Включите LittleFS
-#littlefs:
-#  fs_size: 64kB  # Размер файловой системы (64 КБ для ESP8266)
-
-
 
 # Enable logging
 logger:
 
 # Enable Home Assistant API
-#api:
-#  encryption:
-#    key: "s56QrHIINVkc1aLZpa2c1oxhsQKQsnQHro6OGkHge+8="
-
-
 api:
   encryption:
     key: "s56QrHIINVkc1aLZpa2c1oxhsQKQsnQHro6OGkHge+8="
